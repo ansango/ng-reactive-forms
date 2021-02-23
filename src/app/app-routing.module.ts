@@ -3,7 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: '', pathMatch: 'full' },
+  {
+    path: '',
+    loadChildren: async () =>
+      (await import('./views/activity/activity.module')).ActivityModule,
+  },
   {
     path: 'user',
     loadChildren: async () =>
