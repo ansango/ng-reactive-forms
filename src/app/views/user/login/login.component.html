@@ -2,11 +2,7 @@
   <div class="form-group wrapper-form">
     <h2>Login</h2>
     <h2>{{ message }}</h2>
-    <form
-      class="login-form"
-      (ngSubmit)="login(loginForm)"
-      [formGroup]="loginForm"
-    >
+    <form class="login-form" (ngSubmit)="login()" [formGroup]="loginForm">
       <div class="login-group">
         <div class="email">
           <label>email</label>
@@ -15,19 +11,20 @@
             placeholder="Email"
             required
             name="email"
-            formControlName="email"
+            [formControl]="email"
             required
           />
           <span
             *ngIf="
-              (loginForm.get('email')!.dirty ||
-                loginForm.get('email')!.touched ||
-                message) &&
-              loginForm.get('email')?.invalid
+              loginForm.get('email')?.errors &&
+              (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)
             "
           >
             <div *ngIf="loginForm.get('email')?.errors?.required">
               email is required
+            </div>
+            <div *ngIf="loginForm.get('email')?.errors?.email">
+              email invalid
             </div>
           </span>
         </div>
@@ -38,15 +35,14 @@
             placeholder="Password"
             required
             name="password"
-            formControlName="password"
+            [formControl]="password"
             required
           />
           <span
             *ngIf="
+              loginForm.get('password')?.errors &&
               (loginForm.get('password')!.dirty ||
-                loginForm.get('password')!.touched ||
-                message) &&
-              loginForm.get('password')?.invalid
+                loginForm.get('password')!.touched)
             "
           >
             <div *ngIf="loginForm.get('password')?.errors?.required">
@@ -57,9 +53,7 @@
       </div>
 
       <div class="wrapper-button">
-        <button type="submit" disabled="">
-          Login
-        </button>
+        <button type="submit" [disabled]="!loginForm.valid">Login</button>
       </div>
     </form>
   </div>

@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { UserLogin } from 'src/app/shared/models/user/userLogin';
 
 @Component({
   selector: 'app-login',
@@ -9,28 +15,25 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   public message: string = '';
+  public user: UserLogin = new UserLogin();
+  public email!: FormControl;
+  public password!: FormControl;
   public loginForm!: FormGroup;
 
-  constructor(private router: Router, private builder: FormBuilder) {
-    this.createForm();
-  }
+  constructor(private router: Router, private builder: FormBuilder) {}
 
-  ngOnInit(): void {}
-
-  createForm() {
+  ngOnInit(): void {
+    this.email = new FormControl('', [Validators.required, Validators.email]);
+    this.password = new FormControl('', Validators.required);
     this.loginForm = this.builder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
+      email: this.email,
+      password: this.password,
     });
   }
 
-  login(loginForm: FormGroup) {
-    if (loginForm.invalid) {
-      this.message = 'CHECK ERRORS';
-      console.log(this.message);
-    } else {
-      const email: string = loginForm.value.username;
-      const password: string = loginForm.value.password;
-    }
+  login() {
+    this.user.email = this.email.value;
+    this.user.password = this.password.value;
+    
   }
 }
