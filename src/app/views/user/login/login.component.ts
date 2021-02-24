@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { UserLogin } from 'src/app/shared/models/user/userLogin';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -14,26 +9,22 @@ import { UserLogin } from 'src/app/shared/models/user/userLogin';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  public message: string = '';
-  public user: UserLogin = new UserLogin();
-  public email!: FormControl;
-  public password!: FormControl;
   public loginForm!: FormGroup;
 
-  constructor(private router: Router, private builder: FormBuilder) {}
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
-    this.email = new FormControl('', [Validators.required, Validators.email]);
-    this.password = new FormControl('', Validators.required);
-    this.loginForm = this.builder.group({
-      email: this.email,
-      password: this.password,
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
     });
   }
 
-  login() {
-    this.user.email = this.email.value;
-    this.user.password = this.password.value;
-    
+  onSubmit(form: FormGroup): void {
+    this.userService.login(form.value.email, form.value.password);
   }
 }

@@ -1,20 +1,53 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { UserLogin } from '../models/user/userLogin';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
-    const users = [
-      { email: 'anibalsago@iberdrola.es', password: 'Dr Nice' },
-      { email: 'anibalsantosgo@gmail.com', password: 'Narco' },
-      { email: 'janecarla@iber.es', password: 'Bombasto' },
-      { email: 'carlajane@drola.es', password: 'Celeritas' },
-      { email: 'doejohn@yahoo.es', password: 'Magneta' },
-      { email: 'johndoe@iberdrola.es', password: 'RubberMan' },
+    const activities = [
+      {
+        id: 1,
+        name: 'Football',
+        category: 'Sports',
+        subcategory: 'Sport Team',
+        language: ['es', 'it', 'en'],
+        price: 20,
+        date: '2020',
+        actions: ['', ''],
+      },
+      {
+        id: 2,
+        name: 'Basketball',
+        category: 'Sports',
+        subcategory: 'Sport Team',
+        language: ['es', 'it', 'en'],
+        price: 20,
+        date: '2020',
+        actions: ['', ''],
+      },
+      {
+        id: 3,
+        name: 'Baseball',
+        category: 'Sports',
+        subcategory: 'Sport Team',
+        language: ['es', 'it', 'en'],
+        price: 20,
+        date: '2020',
+        actions: ['', ''],
+      },
     ];
-    return { users };
+    const users = [
+      {
+        name: 'anibal',
+        surname: 'santos',
+        type: 'tourist',
+        email: 'a@a.es',
+        password: 'asg',
+        token: '',
+      },
+    ];
+    return { activities, users };
   }
 }

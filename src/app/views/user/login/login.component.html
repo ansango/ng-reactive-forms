@@ -1,18 +1,19 @@
 <div class="wrapper-login">
   <div class="form-group wrapper-form">
     <h2>Login</h2>
-    <h2>{{ message }}</h2>
-    <form class="login-form" (ngSubmit)="login()" [formGroup]="loginForm">
+    <form
+      class="login-form"
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit(loginForm)"
+    >
       <div class="login-group">
         <div class="email">
           <label>email</label>
           <input
             type="text"
             placeholder="Email"
-            required
             name="email"
-            [formControl]="email"
-            required
+            formControlName="email"
           />
           <span
             *ngIf="
@@ -33,10 +34,8 @@
           <input
             type="password"
             placeholder="Password"
-            required
             name="password"
-            [formControl]="password"
-            required
+            formControlName="password"
           />
           <span
             *ngIf="

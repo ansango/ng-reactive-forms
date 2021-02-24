@@ -1,8 +1,8 @@
-export class UserRegister {
+export class User {
   name!: string;
   surname!: string;
-  type!: [];
+  type!: string;
   email!: string;
   password!: string;
-  rePassword!: string;
+  token!: string;
 }
