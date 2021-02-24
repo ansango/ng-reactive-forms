@@ -9,6 +9,27 @@ const routes: Routes = [
       (await import('./views/activity/activity.module')).ActivityModule,
   },
   {
+    path: 'favorites',
+    loadChildren: async () =>
+      (await import('./views/favorites/favorites.module')).FavoritesModule,
+  },
+  {
+    path: 'my-activities',
+    loadChildren: async () =>
+      (await import('./views/my-activities/my-activities.module'))
+        .MyActivitiesModule,
+  },
+  {
+    path: 'profile',
+    loadChildren: async () =>
+      (await import('./views/profile/profile.module')).ProfileModule,
+  },
+  {
+    path: 'admin',
+    loadChildren: async () =>
+      (await import('./views/admin/admin.module')).AdminModule,
+  },
+  {
     path: 'user',
     loadChildren: async () =>
       (await import('./views/user/user.module')).UserModule,
