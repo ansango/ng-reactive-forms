@@ -40,8 +40,8 @@ export class InMemoryDataService implements InMemoryDbService {
     ];
     const users = [
       {
-        name: 'anibal',
-        surname: 'santos',
+        firstName: 'anibal',
+        lastName: 'santos',
         type: 'tourist',
         email: 'a@a.es',
         password: 'asg',

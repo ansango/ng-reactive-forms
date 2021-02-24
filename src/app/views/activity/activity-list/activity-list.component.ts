@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivityService } from 'src/app/shared/services/activity.service';
 import { Activity } from '../../../shared/models/activity/activity';
-import { ACTIVITIES } from '../activity-mock';
 @Component({
   selector: 'app-activity-list',
   templateUrl: './activity-list.component.html',
