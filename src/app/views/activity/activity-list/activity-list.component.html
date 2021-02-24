@@ -1,1 +1,17 @@
-<p>activity-list works!</p>
+<div class="block">
+  <div class="activities-list-container">
+    <h2>Activities</h2>
+    <ul class="activities">
+      <li
+        *ngFor="let activity of activities"
+        [class.selected]="activity === selectedActivity"
+        (click)="onSelect(activity)"
+      >
+        <span class="badge">{{ activity.id }}</span> {{ activity.name }}
+      </li>
+    </ul>
+  </div>
+  <div class="activies-detail-container">
+    <app-activity-detail [activity]="selectedActivity"></app-activity-detail>
+  </div>
+</div>

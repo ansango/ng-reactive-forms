@@ -1,1 +1,11 @@
-<p>activity-detail works!</p>
+<div *ngIf="activity">
+  <h2>{{ activity.name | uppercase }} Details</h2>
+  <div><span>id: </span>{{ activity.id }}</div>
+  <div><span>name: </span>{{ activity.name }}</div>
+  <div><span>category: </span>{{ activity.category }}</div>
+  <div><span>subcategory: </span>{{ activity.subcategory }}</div>
+  <div><span>language: </span>{{ activity.language }}</div>
+  <div><span>price: </span>{{ activity.price }}</div>
+  <div><span>date: </span>{{ activity.date }}</div>
+  <div><span>actions: </span>{{ activity.actions }}</div>
+</div>
