@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from 'src/app/shared/services/user.service';
 import { User } from 'src/app/shared/models/user/user';
+import { LoginFormBuilder, LoginFormGroup } from 'src/app/shared/modules/forms/login/login.form';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,12 @@ import { User } from 'src/app/shared/models/user/user';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  public loginForm!: FormGroup;
+  public loginForm!: LoginFormGroup;
   public users!: User[];
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: LoginFormBuilder,
     private userService: UserService
   ) {}
 
@@ -26,7 +27,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit(form: FormGroup): void {
+  onSubmit(event: Event, form: LoginFormGroup): void {
+    if (!form.valid) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    };
     this.userService.login(form.value.email, form.value.password);
   }
 }

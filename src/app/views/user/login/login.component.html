@@ -4,7 +4,7 @@
     <form
       class="login-form"
       [formGroup]="loginForm"
-      (ngSubmit)="onSubmit(loginForm)"
+      (ngSubmit)="onSubmit($event, loginForm)"
     >
       <div class="login-group">
         <div class="email">
@@ -58,4 +58,4 @@
   </div>
 </div>
 
-<div *ngFor="let user of users">{{ user.name }}</div>
+<div *ngFor="let user of users">{{ user.firstName }}</div>
