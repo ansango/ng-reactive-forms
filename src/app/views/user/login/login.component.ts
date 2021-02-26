@@ -27,6 +27,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup): void {
-    this.userService.login(form.value.email, form.value.password);
+    this.userService.login(form.value.email, form.value.password).subscribe();
   }
 }

@@ -1,13 +1,14 @@
-export class User {
-  firstName!: string;
-  lastName!: string;
-  type!: UserType;
-  email!: string;
-  password!: string;
-  token!: string;
+export interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  type: UserType;
+  email: string;
+  password: string;
+  token: string;
 }
 
 export enum UserType {
-  TOURIST,
-  COMPANY,
+  TOURIST = 'tourist',
+  COMPANY = 'company',
 }
