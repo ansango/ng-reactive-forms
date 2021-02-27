@@ -27,12 +27,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit(event: Event, form: LoginFormGroup): void {
-    if (!form.valid) {
-      event.preventDefault();
-      event.stopPropagation();
-      return;
-    };
-    this.userService.login(form.value.email, form.value.password);
+  onSubmit(form: LoginFormGroup): void {
+    this.userService.login(form.value.email, form.value.password).subscribe();
   }
 }

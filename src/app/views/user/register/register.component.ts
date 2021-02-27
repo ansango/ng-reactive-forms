@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { UserService } from 'src/app/shared/services/user.service';
+import { UserType } from 'src/app/shared/models/user/user';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -9,6 +16,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class RegisterComponent implements OnInit {
   public registerForm!: FormGroup;
+  public options = Object.values(UserType);
 
   constructor(
     private router: Router,
@@ -17,32 +25,40 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.registerForm = this.formBuilder.group({
-      firstName: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(55),
+    this.registerForm = this.formBuilder.group(
+      {
+        firstName: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(55),
+          ],
         ],
-      ],
-      lastName: [
-        '',
-        [
-          Validators.minLength(3),
-          Validators.maxLength(55),
-          Validators.pattern(/^[-a-zA-Z0-9-()]+(\s+[-a-zA-Z0-9-()]+)*$/),
+        lastName: [
+          '',
+          [
+            Validators.minLength(3),
+            Validators.maxLength(55),
+            Validators.pattern(/^[-a-zA-Z0-9-()]+(\s+[-a-zA-Z0-9-()]+)*$/),
+          ],
         ],
-      ],
-      // TODO: types selectors ngFor select options, model ?
-      type: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      // TODO: MustMatch ???
-      rePassword: ['', [Validators.required, Validators.minLength(8)]],
-    });
+        type: [null, Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        rePassword: ['', [Validators.required]],
+      },
+      { validators: this.checkPasswordEqual }
+    );
   }
   onSubmit(form: FormGroup) {
-    this.userService.register(form.value);
+    this.userService.register(form.value).subscribe();
+  }
+
+  checkPasswordEqual(group: FormGroup): ValidationErrors | null {
+    const pass = group.get('password')?.value;
+    const rePass = group.get('rePassword')?.value;
+    if (pass !== rePass) return { different: true };
+    return null;
   }
 }

@@ -60,6 +60,10 @@
           </span>
         </div>
         <div class="type">
+          <select aria-placeholder="Type" name="type" formControlName="type">
+            <option disabled value="null">Select a type</option>
+            <option *ngFor="let option of options">{{ option }}</option>
+          </select>
           <label>type</label>
           <input
             type="text"
@@ -135,16 +139,14 @@
           />
           <span
             *ngIf="
-              registerForm.get('rePassword')?.errors &&
+              (registerForm.get('rePassword')?.errors ||
+                registerForm?.errors) &&
               (registerForm.get('rePassword')!.dirty ||
                 registerForm.get('rePassword')!.touched)
             "
           >
-            <div *ngIf="registerForm.get('rePassword')?.errors?.required">
-              password is required
-            </div>
-            <div *ngIf="registerForm.get('rePassword')?.errors?.minlength">
-              password is too short
+            <div *ngIf="registerForm?.errors?.different">
+              passwords does not match
             </div>
           </span>
         </div>

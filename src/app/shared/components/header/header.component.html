@@ -6,8 +6,12 @@
     <a routerLink="/my-activities">My Activities</a>
     <a routerLink="/profile">Profile</a>
     <a routerLink="/admin">Admin</a>
-    <a routerLink="/user/login">Sign in</a>
-    <a routerLink="/user/join-now">Join now</a>
-    <a routerLink="/">Logout</a>
+    <a routerLink="/user/login" *ngIf="(isLoggedIn | async) === false"
+      >Sign in</a
+    >
+    <a routerLink="/user/join-now" *ngIf="(isLoggedIn | async) === false"
+      >Join now</a
+    >
+    <a routerLink="/" (click)="logOut()" *ngIf="isLoggedIn | async">Logout</a>
   </div>
 </div>
