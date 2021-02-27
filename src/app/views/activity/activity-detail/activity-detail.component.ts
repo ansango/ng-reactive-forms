@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { UserService } from 'src/app/shared/services/user.service';
 import { Activity } from '../../../shared/models/activity/activity';
 @Component({
   selector: 'app-activity-detail',
@@ -7,7 +8,15 @@ import { Activity } from '../../../shared/models/activity/activity';
 })
 export class ActivityDetailComponent implements OnInit {
   @Input() activity?: Activity;
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {}
+
+  get isLoggedIn(): boolean {
+    return this.userService.isUserLogged();
+  }
+
+  get isTourist(): boolean {
+    return this.userService.isUserTourist();
+  }
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/shared/services/user.service';
 import { User } from 'src/app/shared/models/user/user';
+import { MessageService } from 'src/app/shared/services/message.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    public messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -27,6 +29,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup): void {
-    this.userService.login(form.value.email, form.value.password).subscribe();
+    this.messageService.clear();
+    this.userService
+      .login(form.value.email, form.value.password)
+      .subscribe((resp) => {
+        if (resp) this.router.navigate(['/']);
+      });
   }
 }

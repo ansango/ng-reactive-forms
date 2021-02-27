@@ -1,17 +1,12 @@
 <div class="header">
   <a href="/" class="logo">CompanyLogo</a>
   <div class="header-right">
-    <a routerLink="/">Home</a>
-    <a routerLink="/favorites">Favorites</a>
-    <a routerLink="/my-activities">My Activities</a>
-    <a routerLink="/profile">Profile</a>
-    <a routerLink="/admin">Admin</a>
-    <a routerLink="/user/login" *ngIf="(isLoggedIn | async) === false"
-      >Sign in</a
-    >
-    <a routerLink="/user/join-now" *ngIf="(isLoggedIn | async) === false"
-      >Join now</a
-    >
-    <a routerLink="/" (click)="logOut()" *ngIf="isLoggedIn | async">Logout</a>
+    <a routerLink="/favorites" *ngIf="isLoggedIn">Favorites</a>
+    <a routerLink="/my-activities" *ngIf="isLoggedIn">My Activities</a>
+    <a routerLink="/profile" *ngIf="isLoggedIn">Profile</a>
+    <a routerLink="/admin" *ngIf="isLoggedIn && isCompany">Admin</a>
+    <a routerLink="/user/login" *ngIf="isLoggedIn === false">Sign in</a>
+    <a routerLink="/user/join-now" *ngIf="isLoggedIn === false">Join now</a>
+    <a routerLink="/" (click)="logOut()" *ngIf="isLoggedIn">Logout</a>
   </div>
 </div>

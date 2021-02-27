@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { UserService } from 'src/app/shared/services/user.service';
-import { UserType } from 'src/app/shared/models/user/user';
+import { User, UserType } from 'src/app/shared/models/user/user';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+  public newUser?: User;
   public registerForm!: FormGroup;
   public options = Object.values(UserType);
 
@@ -52,7 +52,11 @@ export class RegisterComponent implements OnInit {
     );
   }
   onSubmit(form: FormGroup) {
-    this.userService.register(form.value).subscribe();
+    const user = form.value;
+    user.id = new Date().valueOf();
+    this.userService.register(user).subscribe((resp) => {
+      this.router.navigate(['user/login']);
+    });
   }
 
   checkPasswordEqual(group: FormGroup): ValidationErrors | null {

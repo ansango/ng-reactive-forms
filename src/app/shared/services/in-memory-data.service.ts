@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
+import {
+  Activity,
+  ActivityCategory,
+  ActivityLanguage,
+  ActivitySubcategoryBeach,
+  ActivitySubcategoryCulture,
+} from '../models/activity/activity';
 import { User, UserType } from '../models/user/user';
 
 @Injectable({
@@ -7,36 +14,30 @@ import { User, UserType } from '../models/user/user';
 })
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
-    const activities = [
+    const activities: Activity[] = [
       {
         id: 1,
-        name: 'Football',
-        category: 'Sports',
-        subcategory: 'Sport Team',
-        language: ['es', 'it', 'en'],
+        name: 'Surfing',
+        category: ActivityCategory.BEACH,
+        subcategory: ActivitySubcategoryBeach.ACTIVITY,
+        description:
+          'Cras ultricies ligula sed magna dictum porta. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.',
+        language: ActivityLanguage.EN,
         price: 20,
-        date: '2020',
-        actions: ['', ''],
+        date: new Date(2020, 11, 28),
+        peopleRegistered: 1,
       },
       {
         id: 2,
-        name: 'Basketball',
-        category: 'Sports',
-        subcategory: 'Sport Team',
-        language: ['es', 'it', 'en'],
+        name: 'Snorkel',
+        category: ActivityCategory.BEACH,
+        subcategory: ActivitySubcategoryBeach.ACTIVITY,
+        description:
+          'Cras ultricies ligula sed magna dictum porta. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.',
+        language: ActivityLanguage.EN,
         price: 20,
-        date: '2020',
-        actions: ['', ''],
-      },
-      {
-        id: 3,
-        name: 'Baseball',
-        category: 'Sports',
-        subcategory: 'Sport Team',
-        language: ['es', 'it', 'en'],
-        price: 20,
-        date: '2020',
-        actions: ['', ''],
+        date: new Date(2020, 11, 28),
+        peopleRegistered: 5,
       },
     ];
     const users: User[] = [
@@ -47,7 +48,14 @@ export class InMemoryDataService implements InMemoryDbService {
         type: UserType.TOURIST,
         email: 'a@a.es',
         password: 'asg',
-        token: '',
+      },
+      {
+        id: 2,
+        firstName: 'anibal',
+        lastName: 'santos',
+        type: UserType.COMPANY,
+        email: 'b@b.es',
+        password: 'asg',
       },
     ];
     return { activities, users };

@@ -5,7 +5,6 @@ export interface User {
   type: UserType;
   email: string;
   password: string;
-  token: string;
 }
 
 export enum UserType {

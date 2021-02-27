@@ -16,8 +16,7 @@ const routes: Routes = [
   {
     path: 'my-activities',
     loadChildren: async () =>
-      (await import('./views/my-activities/my-activities.module'))
-        .MyActivitiesModule,
+    (await import('./views/activity/activity.module')).ActivityModule,
   },
   {
     path: 'profile',

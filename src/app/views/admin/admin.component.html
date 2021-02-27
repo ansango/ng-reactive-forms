@@ -1,1 +1,26 @@
-<p>admin works!</p>
+<h2>Activities</h2>
+<table class="table">
+  <tr>
+    <th></th>
+    <th>name</th>
+    <th>category</th>
+    <th>price</th>
+    <th>language</th>
+    <th>date</th>
+    <th class="empty"></th>
+  </tr>
+  <tr
+    *ngFor="let activity of activities"
+    [class.selected]="activity === selectedActivity"
+    (click)="onSelect(activity)"
+  >
+    <td>{{ activity.id }}</td>
+    <td>{{ activity.name }}</td>
+    <td>{{ activity.category }}</td>
+    <td>{{ activity.price }}</td>
+    <td>{{ activity.language }}</td>
+    <td class="edit-buttons">
+      <button class="edit">Edit</button><button class="delete">Delete</button>
+    </td>
+  </tr>
+</table>

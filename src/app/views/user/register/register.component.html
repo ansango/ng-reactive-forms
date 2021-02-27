@@ -64,13 +64,6 @@
             <option disabled value="null">Select a type</option>
             <option *ngFor="let option of options">{{ option }}</option>
           </select>
-          <label>type</label>
-          <input
-            type="text"
-            placeholder="Type"
-            name="type"
-            formControlName="type"
-          />
           <span
             *ngIf="
               registerForm.get('type')?.errors &&

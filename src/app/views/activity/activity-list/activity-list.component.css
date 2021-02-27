@@ -1,47 +1,4 @@
-/* HeroesComponent's private CSS styles */
-.activities {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 15em;
-}
-.activities li {
-  cursor: pointer;
-  position: relative;
-  left: 0;
-  background-color: #eee;
-  margin: 0.5em;
-  padding: 0.3em 0;
-  height: 1.6em;
-  border-radius: 4px;
-}
-.activities li:hover {
-  color: #607d8b;
-  background-color: #ddd;
-  left: 0.1em;
-}
-.activities li.selected {
-  background-color: #cfd8dc;
-  color: white;
-}
-.activities li.selected:hover {
-  background-color: #bbd8dc;
-  color: white;
-}
-.activities .badge {
-  display: inline-block;
-  font-size: small;
-  color: white;
-  padding: 0.8em 0.7em 0 0.7em;
-  background-color: #405061;
-  line-height: 1em;
-  position: relative;
-  left: -1px;
-  top: -4px;
-  height: 1.8em;
-  margin-right: 0.8em;
-  border-radius: 4px 0 0 4px;
-}
+
 
 .block {
   display: flex;
@@ -49,4 +6,59 @@
 
 .block > * {
   width: 50%;
+}
+
+table.table {
+  width: 100%;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.25em;
+}
+
+.table tr {
+  border-bottom: 1px solid #ddd;
+}
+td.edit-buttons {
+  text-align: right;
+}
+button {
+  border-radius: 3px;
+  border: none;
+  margin: 0 0.25em;
+  transition: all 0.3s;
+}
+
+button:hover {
+  box-shadow: 0 0 4px rgba(3, 3, 3, 0.8);
+  opacity: 0.9;
+}
+
+button.edit {
+  background: #6f9;
+}
+button.delete {
+  background: #f69;
+}
+
+@media screen and (max-width: 800px) {
+  tr {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0.5em 0;
+    border: 1px solid rgba(3, 3, 3, 0.2);
+  }
+  td,
+  th {
+    flex: 1 1 150px;
+    border: 0.5px solid rgba(3, 3, 3, 0.2);
+  }
+  td.edit-buttons,
+  td.empty {
+    /*flex: 1 0 90%;
+    text-align: center;*/
+  }
 }

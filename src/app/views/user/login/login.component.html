@@ -1,6 +1,9 @@
 <div class="wrapper-login">
   <div class="form-group wrapper-form">
     <h2>Login</h2>
+    <h3 *ngIf="messageService.message">
+      {{ messageService.message }}
+    </h3>
     <form
       class="login-form"
       [formGroup]="loginForm"
