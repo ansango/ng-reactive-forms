@@ -10,6 +10,7 @@ import { InMemoryDataService } from './shared/services/in-memory-data.service';
 
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { UserLoggedCanActivate } from './shared/providers/user-logged.can-activate';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent],
@@ -21,7 +22,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
       dataEncapsulation: false,
     }),
   ],
-  providers: [],
+  providers: [UserLoggedCanActivate],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

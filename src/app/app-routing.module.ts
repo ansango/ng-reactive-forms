@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { UserLoggedCanActivate } from './shared/providers/user-logged.can-activate';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: async () =>
       (await import('./views/profile/profile.module')).ProfileModule,
+    canActivate: [UserLoggedCanActivate],
   },
   {
     path: 'admin',

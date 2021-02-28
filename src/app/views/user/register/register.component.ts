@@ -1,26 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   AbstractControl,
-  FormBuilder,
   FormGroup,
   ValidationErrors,
-  Validators,
+  Validators
 } from '@angular/forms';
-import { UserService } from 'src/app/shared/services/user.service';
+import { Router } from '@angular/router';
 import { UserType } from 'src/app/shared/models/user/user';
+import { MyFormBuilder } from 'src/app/shared/modules/forms/form.builder';
+import { MyFormGroup } from 'src/app/shared/modules/forms/form.group';
+import { IRegister } from 'src/app/shared/modules/forms/register/register.interface';
+import { UserService } from 'src/app/shared/services/user.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  public registerForm!: FormGroup;
+  public registerForm!: MyFormGroup<IRegister>;
   public options = Object.values(UserType);
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: MyFormBuilder<IRegister>,
     private userService: UserService
   ) {}
 
@@ -55,9 +58,8 @@ export class RegisterComponent implements OnInit {
     this.userService.register(form.value).subscribe();
   }
 
-  checkPasswordEqual(group: FormGroup): ValidationErrors | null {
-    const pass = group.get('password')?.value;
-    const rePass = group.get('rePassword')?.value;
+  checkPasswordEqual(formGroup: AbstractControl): ValidationErrors | null {
+    const {password: pass, rePassword: rePass} = (<MyFormGroup<IRegister>>formGroup).value;
     if (pass !== rePass) return { different: true };
     return null;
   }

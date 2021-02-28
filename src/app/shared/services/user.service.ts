@@ -33,7 +33,6 @@ export class UserService {
     return $user;
   }
   register(user: User): Observable<User> {
-    user.id = 2;
     return this.http.post<User>(this.usersUrl, user, this.httpOptions);
   }
 
