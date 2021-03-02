@@ -7,7 +7,7 @@
   <div><span>description: </span>{{ activity.description }}</div>
   <div><span>language: </span>{{ activity.language }}</div>
   <div><span>price: </span>{{ activity.price }}</div>
-  <div><span>date: </span>{{ activity.date }}</div>
+  <div><span>date: </span>{{ activity.date | date: 'dd/MM/yyyy' }}</div>
   <div><span>people registered: </span>{{ activity.peopleRegistered }}</div>
   <button *ngIf="isTourist">Add Favorites</button>
   <button *ngIf="isTourist">Sign up!</button>

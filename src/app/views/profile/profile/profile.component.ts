@@ -12,23 +12,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class ProfileComponent implements OnInit {
   profile?: Profile;
-  constructor(
-    private router: Router,
-    private userService: UserService,
-    private profileService: ProfileService
-  ) {}
+  constructor(private router: Router, private userService: UserService) {}
 
-  ngOnInit(): void {
-    this.getProfile();
-  }
-
-  get currentUser(): CurrentUser | undefined {
-    return this.userService.getCurrentUser();
-  }
-
-  getProfile(): void {
-    this.profileService
-      .getProfile(this.currentUser)
-      .subscribe((profile) => (this.profile = profile));
-  }
+  ngOnInit(): void {}
 }

@@ -15,7 +15,7 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
   private loggedUser: boolean = false;
-  private currentUser?: CurrentUser;
+  private currentUser!: CurrentUser;
   private typeUser: string = '';
   constructor(
     private http: HttpClient,
@@ -29,7 +29,6 @@ export class UserService {
           return user.email === email && user.password === password;
         });
         if (user.length === 0) return this.log('user not found');
-        this.typeUser = user[0].type;
         this.setLocalUser(user);
         return user;
       }),
@@ -51,8 +50,9 @@ export class UserService {
   }
 
   isUserLogged(): boolean {
-    if (localStorage.getItem('currentUser')) return true;
-    return this.loggedUser;
+    const isLoggedIn = Object.entries(this.getLocaleUser()).length !== 0;
+    if (isLoggedIn) return (this.loggedUser = isLoggedIn);
+    return (this.loggedUser = isLoggedIn);
   }
 
   isUserTourist(): boolean {
@@ -63,17 +63,6 @@ export class UserService {
   isUserCompany(): boolean {
     if (this.typeUser === 'company') return true;
     return false;
-  }
-
-  getAll(): Observable<User[]> {
-    return this.http.get<User[]>(this.usersUrl);
-  }
-
-  getCurrentUser(): CurrentUser | undefined {
-    const user = localStorage.getItem('currentUser');
-    if (!user) return {};
-    this.currentUser = JSON.parse(user);
-    return this.currentUser;
   }
 
   setLocalUser(user: User[]): void {
@@ -88,6 +77,21 @@ export class UserService {
         type: _user.type,
       })
     );
+
+    this.typeUser = _user.type;
+  }
+
+  getLocaleUser(): CurrentUser {
+    const user = localStorage.getItem('currentUser');
+    if (!user) return {};
+    this.currentUser = JSON.parse(user);
+    this.typeUser = this.currentUser.type!;
+    this.loggedUser = true;
+    return this.currentUser;
+  }
+
+  getAll(): Observable<User[]> {
+    return this.http.get<User[]>(this.usersUrl);
   }
 
   private log(message: string) {
