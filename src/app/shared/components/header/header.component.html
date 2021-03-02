@@ -2,7 +2,7 @@
   <a href="/" class="logo">CompanyLogo</a>
   <div class="header-right">
     <a routerLink="/favorites" *ngIf="isLoggedIn">Favorites</a>
-    <a routerLink="/my-activities" *ngIf="isLoggedIn">My Activities</a>
+    <a routerLink="/my-activities" *ngIf="isLoggedIn && isTourist">My Activities</a>
     <a routerLink="/profile" *ngIf="isLoggedIn">Profile</a>
     <a routerLink="/admin" *ngIf="isLoggedIn && isCompany">Admin</a>
     <a routerLink="/user/login" *ngIf="isLoggedIn === false">Sign in</a>

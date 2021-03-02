@@ -22,7 +22,7 @@ export class AdminComponent implements OnInit {
 
   getActivities(): void {
     this.activityService
-      .getActivities()
+      .getActivitiesByUser()
       .subscribe((activities) => (this.activities = activities));
   }
 }

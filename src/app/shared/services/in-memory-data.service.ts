@@ -7,6 +7,7 @@ import {
   ActivitySubcategoryBeach,
   ActivitySubcategoryCulture,
 } from '../models/activity/activity';
+import { Profile, ProfileNationality } from '../models/profile/profile';
 import { User, UserType } from '../models/user/user';
 
 @Injectable({
@@ -58,6 +59,18 @@ export class InMemoryDataService implements InMemoryDbService {
         password: 'asg',
       },
     ];
-    return { activities, users };
+    const profiles: Profile[] = [
+      {
+        id: 1,
+        firstName: 'anibal',
+        lastName: 'santos',
+        birthday: new Date(1989, 2, 7),
+        phone: '645227483',
+        nationality: ProfileNationality.ES,
+        nif: '70873352W',
+        about: 'Soy Anibal Santos, un turista',
+      },
+    ];
+    return { activities, users, profiles };
   }
 }

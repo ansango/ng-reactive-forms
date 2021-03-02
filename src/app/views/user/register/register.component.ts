@@ -14,6 +14,7 @@ import { User, UserType } from 'src/app/shared/models/user/user';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+  
   public newUser?: User;
   public registerForm!: FormGroup;
   public options = Object.values(UserType);

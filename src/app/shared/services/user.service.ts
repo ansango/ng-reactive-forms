@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable, of, throwError } from 'rxjs';
-import { first, map } from 'rxjs/operators';
-import { User } from '../models/user/user';
+import { first, map, tap } from 'rxjs/operators';
+import { CurrentUser, User, UserType } from '../models/user/user';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -14,8 +14,9 @@ export class UserService {
   public httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
-  private loggedUser?: boolean = false;
-  private user?: User;
+  private loggedUser: boolean = false;
+  private currentUser?: CurrentUser;
+  private typeUser: string = '';
   constructor(
     private http: HttpClient,
     private messageService: MessageService
@@ -28,12 +29,15 @@ export class UserService {
           return user.email === email && user.password === password;
         });
         if (user.length === 0) return this.log('user not found');
-        localStorage.setItem('user', JSON.stringify(user));
+        this.typeUser = user[0].type;
+        this.setLocalUser(user);
         return user;
       }),
       first()
     );
-    $user.subscribe((user) => ((this.user = user), (this.loggedUser = true)));
+    $user.subscribe(
+      (user) => ((this.currentUser = user), (this.loggedUser = true))
+    );
     return $user;
   }
 
@@ -42,24 +46,22 @@ export class UserService {
   }
 
   logout(): void {
-    localStorage.removeItem('user');
+    localStorage.clear();
     this.loggedUser = false;
   }
 
   isUserLogged(): boolean {
-    if (localStorage.getItem('user')) {
-      return true;
-    }
-    return false;
+    if (localStorage.getItem('currentUser')) return true;
+    return this.loggedUser;
   }
 
   isUserTourist(): boolean {
-    if (this.getUserType() === 'tourist') return true;
+    if (this.typeUser === 'tourist') return true;
     return false;
   }
 
   isUserCompany(): boolean {
-    if (this.getUserType() === 'company') return true;
+    if (this.typeUser === 'company') return true;
     return false;
   }
 
@@ -67,10 +69,25 @@ export class UserService {
     return this.http.get<User[]>(this.usersUrl);
   }
 
-  getUserType(): string {
-    const user = localStorage.getItem('user');
-    if (user === null) return '';
-    return JSON.parse(user)[0].type;
+  getCurrentUser(): CurrentUser | undefined {
+    const user = localStorage.getItem('currentUser');
+    if (!user) return {};
+    this.currentUser = JSON.parse(user);
+    return this.currentUser;
+  }
+
+  setLocalUser(user: User[]): void {
+    const _user = user[0];
+    localStorage.setItem(
+      'currentUser',
+      JSON.stringify({
+        id: _user.id,
+        firstName: _user.firstName,
+        lastName: _user.lastName,
+        email: _user.email,
+        type: _user.type,
+      })
+    );
   }
 
   private log(message: string) {

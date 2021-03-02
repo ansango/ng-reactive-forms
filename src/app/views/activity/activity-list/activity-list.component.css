@@ -36,11 +36,8 @@ button:hover {
   opacity: 0.9;
 }
 
-button.edit {
+button.action {
   background: #6f9;
-}
-button.delete {
-  background: #f69;
 }
 
 @media screen and (max-width: 800px) {

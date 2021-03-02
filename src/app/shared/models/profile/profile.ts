@@ -1,28 +1,15 @@
-export interface ProfileTourist {
+export interface Profile {
   id: number;
   firstName: string;
   lastName: string;
   birthday: Date;
-  phone: number;
+  phone: string;
   nationality: ProfileNationality;
-  document: ProfileDocument.NIF;
+  nif: string;
   about: string;
-  education: [];
-}
-
-export interface ProfileCompany {
-  id: number;
-  firstName: string;
-  lastName: string;
-  birthday: Date;
-  phone: number;
-  nationality: ProfileNationality;
-  document: ProfileDocument.CIF;
-  about: string;
-  companyName: string;
-  companyDescription: string;
-  education: [];
-  activity: [];
+  companyName?: string;
+  companyDescription?: string;
+  CIF?: string;
 }
 
 export enum ProfileNationality {
@@ -30,9 +17,4 @@ export enum ProfileNationality {
   FR = 'fr',
   IT = 'it',
   PT = 'pt',
-}
-
-export enum ProfileDocument {
-  NIF,
-  CIF,
 }

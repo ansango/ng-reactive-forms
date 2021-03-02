@@ -13,7 +13,6 @@
     <tr
       *ngFor="let activity of activities"
       [class.selected]="activity === selectedActivity"
-      (click)="onSelect(activity)"
     >
       <td>{{ activity.id }}</td>
       <td>{{ activity.name }}</td>
@@ -22,7 +21,7 @@
       <td>{{ activity.language }}</td>
       <td>{{ activity.date | date: "dd/MM/yyyy" }}</td>
       <td class="edit-buttons">
-        <button class="edit">Edit</button><button class="delete">Delete</button>
+        <button class="action" (click)="onSelect(activity)"> -> </button>
       </td>
     </tr>
   </table>
