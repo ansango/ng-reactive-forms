@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable, of, throwError } from 'rxjs';
 import { first, map, tap } from 'rxjs/operators';
+import { Activity } from '../models/activity/activity';
 import { CurrentUser, User, UserType } from '../models/user/user';
 import { MessageService } from './message.service';
 
@@ -49,6 +50,20 @@ export class UserService {
     this.loggedUser = false;
   }
 
+  getFavorites(): Activity[] {
+    return JSON.parse(localStorage.getItem('favorites')!) || [];
+  }
+
+  addFavorites(activity: Activity): boolean {
+    const activities = this.getFavorites();
+    activities.push(activity);
+    localStorage.setItem('favorites', JSON.stringify(activities));
+    return true;
+  }
+  removeFavorites(): void {
+    const activities = this.getFavorites();
+  }
+
   isUserLogged(): boolean {
     const isLoggedIn = Object.entries(this.getLocaleUser()).length !== 0;
     if (isLoggedIn) return (this.loggedUser = isLoggedIn);
@@ -82,9 +97,7 @@ export class UserService {
   }
 
   getLocaleUser(): CurrentUser {
-    const user = localStorage.getItem('currentUser');
-    if (!user) return {};
-    this.currentUser = JSON.parse(user);
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser')!) || {};
     this.typeUser = this.currentUser.type!;
     this.loggedUser = true;
     return this.currentUser;

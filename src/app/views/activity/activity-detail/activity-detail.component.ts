@@ -19,4 +19,8 @@ export class ActivityDetailComponent implements OnInit {
   get isTourist(): boolean {
     return this.userService.isUserTourist();
   }
+
+  addFavorites(activity: Activity) {
+    this.userService.addFavorites(activity);
+  }
 }
