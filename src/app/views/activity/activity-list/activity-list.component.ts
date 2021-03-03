@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { flatMap, mergeAll, tap, toArray } from 'rxjs/operators';
 import { ActivityService } from 'src/app/shared/services/activity.service';
+import { MyActivitiesService } from 'src/app/shared/services/my-activities.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Activity } from '../../../shared/models/activity/activity';
 @Component({
@@ -13,12 +14,12 @@ export class ActivityListComponent implements OnInit {
   selectedActivity?: Activity & {signedUp?: boolean};
   constructor(
     private activityService: ActivityService,
-    private userService: UserService
+    private myActivitiesService: MyActivitiesService
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.getActivities();
-    this.userService.getMyActivities()
+    this.myActivitiesService.getMyActivities()
     .pipe(
       mergeAll()
     ).subscribe(activity => {
@@ -27,13 +28,6 @@ export class ActivityListComponent implements OnInit {
         act.signedUp = true;
       }
     });
-    // let activitiesMapped = await this.userService.getMyActivities()
-    // .pipe(
-    //   mergeAll(),
-    //   flatMap(activity => this.activityService.getActivity(activity.activityId)),
-    //   toArray()
-    // ).toPromise();
-    // console.log(activitiesMapped);
   }
 
   onSelect(activity: Activity): void {

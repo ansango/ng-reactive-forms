@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Profile } from 'src/app/shared/models/profile/profile';
-import { CurrentUser } from 'src/app/shared/models/user/user';
 import { ProfileService } from 'src/app/shared/services/profile.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -12,10 +11,14 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class ProfileComponent implements OnInit {
   profile?: Profile;
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private profileService: ProfileService
+  ) {}
 
   ngOnInit(): void {
-    this.userService.getProfile().subscribe(profile => {
+    this.profileService.getProfile().subscribe((profile) => {
       console.log(profile);
     });
   }

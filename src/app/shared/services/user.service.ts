@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { filter, first, map, mergeAll, switchMap, toArray } from 'rxjs/operators';
+import { filter, first, map, mergeAll, toArray } from 'rxjs/operators';
 import { Activity } from '../models/activity/activity';
 import { Profile } from '../models/profile/profile';
-import { CurrentUser, User, UserForm } from '../models/user/user';
+import { User, UserForm } from '../models/user/user';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -17,11 +17,11 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
   private loggedUser: boolean = false;
-  private currentUser!: CurrentUser;
+  private currentUser!: User;
   private typeUser: string = '';
   constructor(
     private http: HttpClient,
-    private messageService: MessageService,
+    private messageService: MessageService
   ) {}
 
   login(email: string, password: string): Observable<User> {
@@ -46,24 +46,20 @@ export class UserService {
     const user: User = {
       email: userForm.email,
       password: userForm.password,
-      type: userForm.type
+      type: userForm.type,
     };
-    const $user = this.http.post<User>(this.usersUrl, user, this.httpOptions)
-    // .pipe(
-    //   switchMap(user => {
-    //     const profile: Profile = {
-    //       ...userForm,
-    //       id: user.id,
-    //     }
-    //     return [of(user), this.http.post<Profile>('api/profile', profile, this.httpOptions)];
-    //   }),
-    // );
-    $user.subscribe(user => {
+
+    const $user = this.http.post<User>(this.usersUrl, user, this.httpOptions);
+    $user.subscribe((user) => {
       const profile: Profile = {
-        ...userForm,
         id: user.id,
-      }
-      this.http.post<Profile>('api/profiles', profile, this.httpOptions).subscribe();
+        firstName: userForm.firstName,
+        lastName: userForm.lastName,
+        type: userForm.type,
+      };
+      this.http
+        .post<Profile>('api/profiles', profile, this.httpOptions)
+        .subscribe();
     });
     return $user;
   }
@@ -83,6 +79,7 @@ export class UserService {
     localStorage.setItem('favorites', JSON.stringify(activities));
     return true;
   }
+
   removeFavorites(): void {
     const activities = this.getFavorites();
   }
@@ -109,17 +106,18 @@ export class UserService {
       'currentUser',
       JSON.stringify({
         id: _user.id,
-        // firstName: _user.firstName,
-        // lastName: _user.lastName,
         email: _user.email,
         type: _user.type,
       })
     );
-
     this.typeUser = _user.type;
   }
 
-  getLocaleUser(): CurrentUser {
+  getCurrentUser(): User {
+    return this.currentUser;
+  }
+
+  getLocaleUser(): User {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser')!) || {};
     this.typeUser = this.currentUser.type!;
     this.loggedUser = true;
@@ -132,24 +130,5 @@ export class UserService {
 
   private log(message: string) {
     this.messageService.add(`${message}`);
-  }
-
-  subscribeActivity(activityId: number) {
-    return this.http.post(this.myActivitiesUrl, {
-      activityId, userId: this.currentUser.id,
-    }, this.httpOptions);
-  }
-
-  getMyActivities() {
-    return this.http.get<{activityId: number, userId: number}[]>(this.myActivitiesUrl)
-    .pipe(
-      mergeAll(),
-      filter(activity => activity.userId == this.currentUser.id),
-      toArray(),
-    );
-  }
-
-  getProfile() {
-    return this.http.get<Profile>('api/profiles/' + this.currentUser.id);
   }
 }

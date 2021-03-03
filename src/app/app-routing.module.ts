@@ -14,11 +14,6 @@ const routes: Routes = [
       (await import('./views/favorites/favorites.module')).FavoritesModule,
   },
   {
-    path: 'my-activities',
-    loadChildren: async () =>
-    (await import('./views/activity/activity.module')).ActivityModule,
-  },
-  {
     path: 'profile',
     loadChildren: async () =>
       (await import('./views/profile/profile.module')).ProfileModule,

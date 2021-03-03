@@ -6,6 +6,7 @@ import {
   ActivityLanguage,
   ActivitySubcategoryBeach,
   ActivitySubcategoryCulture,
+  ActivitySubcategoryWine,
 } from '../models/activity/activity';
 import { Profile, ProfileNationality } from '../models/profile/profile';
 import { User, UserType } from '../models/user/user';
@@ -42,8 +43,21 @@ export class InMemoryDataService implements InMemoryDbService {
         peopleRegistered: 5,
         userId: 2,
       },
+      {
+        id: 3,
+        name: 'Drink',
+        category: ActivityCategory.WINE,
+        subcategory: ActivitySubcategoryWine.WINERY,
+        description:
+          'Cras ultricies ligula sed magna dictum porta. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.',
+        language: ActivityLanguage.EN,
+        price: 10,
+        date: new Date(2020, 11, 28),
+        peopleRegistered: 1,
+        userId: 3,
+      },
     ];
-    const myActivities: {id: number, activityId: number, userId: number}[] = [
+    const myActivities: { id: number; activityId: number; userId: number }[] = [
       {
         id: 1,
         activityId: 1,
@@ -78,6 +92,7 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 1,
         firstName: 'anibal',
         lastName: 'santos',
+        type: UserType.TOURIST,
         birthday: new Date(1989, 2, 7),
         phone: '645227483',
         nationality: ProfileNationality.ES,

@@ -7,4 +7,11 @@
    3. como hacer una confirmacion? con un modal?
    4. como formatear fecha en input a dd-mm-yyyy
 
-5. 
+
+USER -> PROFILE COMPANY | PROFILE TOURIST
+
+ACTIVITY -> CREATED BY PROFILE COMPANY
+         -> SUBSCRIBE BY PROFILE TOURIST
+
+EDUCATION -> CREATED BY PROFILE (TOURIST || COMPANY)
+          -> 

@@ -12,5 +12,10 @@
   <button *ngIf="isTourist" (click)="addFavorites(activity)">
     Add Favorites
   </button>
-  <button *ngIf="isTourist && !activity?.signedUp">Sign up!</button>
+  <button
+    *ngIf="isTourist && !activity?.signedUp"
+    (click)="subscription(activity)"
+  >
+    Sign up!
+  </button>
 </div>

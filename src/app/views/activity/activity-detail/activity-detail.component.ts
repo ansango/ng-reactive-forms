@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MyActivitiesService } from 'src/app/shared/services/my-activities.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Activity } from '../../../shared/models/activity/activity';
 @Component({
@@ -7,8 +8,11 @@ import { Activity } from '../../../shared/models/activity/activity';
   styleUrls: ['./activity-detail.component.css'],
 })
 export class ActivityDetailComponent implements OnInit {
-  @Input() activity?: Activity & {signedUp?: boolean};
-  constructor(private userService: UserService) {}
+  @Input() activity?: Activity & { signedUp?: boolean };
+  constructor(
+    private userService: UserService,
+    private myActivitiesService: MyActivitiesService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -18,6 +22,10 @@ export class ActivityDetailComponent implements OnInit {
 
   get isTourist(): boolean {
     return this.userService.isUserTourist();
+  }
+
+  subscription(activity: Activity) {
+    this.myActivitiesService.subscribeActivity(activity.id);
   }
 
   addFavorites(activity: Activity) {

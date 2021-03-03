@@ -13,16 +13,10 @@ export class AdminComponent implements OnInit {
   constructor(private activityService: ActivityService) {}
 
   ngOnInit(): void {
-    this.getActivities();
   }
 
   onSelect(activity: Activity): void {
     this.selectedActivity = activity;
   }
 
-  getActivities(): void {
-    this.activityService
-      .getActivitiesByUser()
-      .subscribe((activities) => (this.activities = activities));
-  }
 }

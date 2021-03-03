@@ -1,0 +1,51 @@
+<h2>Activities</h2>
+<div class="block">
+  <table class="table">
+    <tr>
+      <th></th>
+      <th>name</th>
+      <th>category</th>
+      <th>price</th>
+      <th>language</th>
+      <th>date</th>
+      <th class="empty"></th>
+    </tr>
+
+    <tr
+      *ngFor="let activity of activities"
+      [class.selected]="activity === selectedActivity"
+    >
+      <ng-container *ngIf="activity.signedUp">
+        <td>{{ activity.id }}</td>
+        <td>{{ activity.name }}</td>
+        <td>{{ activity.category }}</td>
+        <td>{{ activity.price }}</td>
+        <td>{{ activity.language }}</td>
+        <td>{{ activity.date | date: "dd/MM/yyyy" }}</td>
+        <td class="edit-buttons">
+          <button class="action" (click)="onSelect(activity)">-></button>
+        </td>
+      </ng-container>
+    </tr>
+  </table>
+
+  <div class="activies-detail-container">
+    <div *ngIf="selectedActivity">
+      <h2>{{ selectedActivity.name | uppercase }} Details</h2>
+      <div><span>id: </span>{{ selectedActivity.id }}</div>
+      <div><span>name: </span>{{ selectedActivity.name }}</div>
+      <div><span>category: </span>{{ selectedActivity.category }}</div>
+      <div><span>subcategory: </span>{{ selectedActivity.subcategory }}</div>
+      <div><span>description: </span>{{ selectedActivity.description }}</div>
+      <div><span>language: </span>{{ selectedActivity.language }}</div>
+      <div><span>price: </span>{{ selectedActivity.price }}</div>
+      <div>
+        <span>date: </span>{{ selectedActivity.date | date: "dd/MM/yyyy" }}
+      </div>
+      <div>
+        <span>people registered: </span>{{ selectedActivity.peopleRegistered }}
+      </div>
+      <button *ngIf="selectedActivity?.signedUp">Cancel subscription</button>
+    </div>
+  </div>
+</div>

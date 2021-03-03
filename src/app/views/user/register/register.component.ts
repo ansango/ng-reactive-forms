@@ -54,7 +54,6 @@ export class RegisterComponent implements OnInit {
   }
   onSubmit(form: FormGroup) {
     const user = form.value;
-    user.id = new Date().valueOf();
     this.userService.register(user).subscribe((resp) => {
       this.router.navigate(['user/login']);
     });

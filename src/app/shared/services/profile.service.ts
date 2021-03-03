@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Profile } from '../models/profile/profile';
-import { CurrentUser } from '../models/user/user';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,10 +12,10 @@ export class ProfileService {
   public httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
-  getProfile(currentUser: CurrentUser | undefined): Observable<Profile> {
-    const url = `${this.profilesUrl}/${currentUser?.id}`;
-    return this.http.get<Profile>(url);
+  getProfile() {
+    const currentUser = this.userService.getCurrentUser();
+    return this.http.get<Profile>(`${this.profilesUrl}/${currentUser.id}`);
   }
 }

@@ -23,10 +23,6 @@ export class ActivityService {
     return this.http.get<Activity[]>(this.activitiesUrl + '/' + id);
   }
 
-  getActivitiesByUser(): Observable<Activity[]> {
-    return this.http.get<Activity[]>(this.activitiesUrl);
-  }
-
   postActivity(activity: Activity): Observable<Activity> {
     if (!this.userService.isUserLogged() || this.userService.getLocaleUser().type == UserType.TOURIST) {
       return throwError(403);
