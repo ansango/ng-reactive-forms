@@ -1,17 +1,18 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { Observable, of, throwError } from 'rxjs';
-import { first, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { filter, first, map, mergeAll, switchMap, toArray } from 'rxjs/operators';
 import { Activity } from '../models/activity/activity';
-import { CurrentUser, User, UserType } from '../models/user/user';
+import { Profile } from '../models/profile/profile';
+import { CurrentUser, User, UserForm } from '../models/user/user';
 import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private usersUrl = 'api/users';
+  private readonly usersUrl = 'api/users';
+  private readonly myActivitiesUrl = 'api/myActivities';
   public httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
@@ -20,7 +21,7 @@ export class UserService {
   private typeUser: string = '';
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {}
 
   login(email: string, password: string): Observable<User> {
@@ -41,8 +42,30 @@ export class UserService {
     return $user;
   }
 
-  register(user: User): Observable<User> {
-    return this.http.post<User>(this.usersUrl, user, this.httpOptions);
+  register(userForm: UserForm): Observable<User> {
+    const user: User = {
+      email: userForm.email,
+      password: userForm.password,
+      type: userForm.type
+    };
+    const $user = this.http.post<User>(this.usersUrl, user, this.httpOptions)
+    // .pipe(
+    //   switchMap(user => {
+    //     const profile: Profile = {
+    //       ...userForm,
+    //       id: user.id,
+    //     }
+    //     return [of(user), this.http.post<Profile>('api/profile', profile, this.httpOptions)];
+    //   }),
+    // );
+    $user.subscribe(user => {
+      const profile: Profile = {
+        ...userForm,
+        id: user.id,
+      }
+      this.http.post<Profile>('api/profiles', profile, this.httpOptions).subscribe();
+    });
+    return $user;
   }
 
   logout(): void {
@@ -86,8 +109,8 @@ export class UserService {
       'currentUser',
       JSON.stringify({
         id: _user.id,
-        firstName: _user.firstName,
-        lastName: _user.lastName,
+        // firstName: _user.firstName,
+        // lastName: _user.lastName,
         email: _user.email,
         type: _user.type,
       })
@@ -109,5 +132,24 @@ export class UserService {
 
   private log(message: string) {
     this.messageService.add(`${message}`);
+  }
+
+  subscribeActivity(activityId: number) {
+    return this.http.post(this.myActivitiesUrl, {
+      activityId, userId: this.currentUser.id,
+    }, this.httpOptions);
+  }
+
+  getMyActivities() {
+    return this.http.get<{activityId: number, userId: number}[]>(this.myActivitiesUrl)
+    .pipe(
+      mergeAll(),
+      filter(activity => activity.userId == this.currentUser.id),
+      toArray(),
+    );
+  }
+
+  getProfile() {
+    return this.http.get<Profile>('api/profiles/' + this.currentUser.id);
   }
 }

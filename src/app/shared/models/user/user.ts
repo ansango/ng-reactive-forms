@@ -1,7 +1,7 @@
+import { Profile } from "../profile/profile";
+
 export interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
+  id?: number;
   type: UserType;
   email: string;
   password: string;
@@ -18,4 +18,8 @@ export interface CurrentUser {
   lastName?: string;
   type?: UserType;
   email?: string;
+}
+
+export interface UserForm extends User, Profile {
+  rePassword: string;
 }

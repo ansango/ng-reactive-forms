@@ -7,7 +7,7 @@ import { Activity } from '../../../shared/models/activity/activity';
   styleUrls: ['./activity-detail.component.css'],
 })
 export class ActivityDetailComponent implements OnInit {
-  @Input() activity?: Activity;
+  @Input() activity?: Activity & {signedUp?: boolean};
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {}

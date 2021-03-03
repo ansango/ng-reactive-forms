@@ -27,6 +27,7 @@ export class InMemoryDataService implements InMemoryDbService {
         price: 20,
         date: new Date(2020, 11, 28),
         peopleRegistered: 1,
+        userId: 2,
       },
       {
         id: 2,
@@ -39,21 +40,34 @@ export class InMemoryDataService implements InMemoryDbService {
         price: 20,
         date: new Date(2020, 11, 28),
         peopleRegistered: 5,
+        userId: 2,
+      },
+    ];
+    const myActivities: {id: number, activityId: number, userId: number}[] = [
+      {
+        id: 1,
+        activityId: 1,
+        userId: 1,
+      },
+      {
+        id: 2,
+        activityId: 2,
+        userId: 2,
       },
     ];
     const users: User[] = [
       {
         id: 1,
-        firstName: 'anibal',
-        lastName: 'santos',
+        // firstName: 'anibal',
+        // lastName: 'santos',
         type: UserType.TOURIST,
         email: 'a@a.es',
         password: 'asg',
       },
       {
         id: 2,
-        firstName: 'anibal',
-        lastName: 'santos',
+        // firstName: 'anibal',
+        // lastName: 'santos',
         type: UserType.COMPANY,
         email: 'b@b.es',
         password: 'asg',
@@ -71,6 +85,6 @@ export class InMemoryDataService implements InMemoryDbService {
         about: 'Soy Anibal Santos, un turista',
       },
     ];
-    return { activities, users, profiles };
+    return { activities, users, profiles, myActivities };
   }
 }

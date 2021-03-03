@@ -11,6 +11,7 @@ export interface Activity {
   price: number;
   date: Date;
   peopleRegistered: number;
+  userId: number;
 }
 
 export enum ActivityCategory {
